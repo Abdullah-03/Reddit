@@ -6,8 +6,30 @@
 <h1>Home Page</h1>
 
     {% for post in posts %}
-        <h3>{{ post.title }} - {{ post.karma }}</h3>
-        <p>{{ post.body }}</p><br>
+        <div class="post">
+            <div class="post-body">
+                <i>Posted by {{ post.author.username }}</i>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.body }}</p><br>
+            </div>
+        <div class="post-vote">
+                <button hx-post="/clicked"
+                hx-trigger="click"
+                hx-target="#parent-div"
+                hx-swap="innerHTML">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+                <b id="post-karma">{{ post.karma }}</b>
+                <button hx-post="/clicked"
+                hx-trigger="click"
+                hx-target="#post-karma"
+                hx-swap="innerHTML">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </button>
+            </div>
+        </div>
     {% endfor %}
 
 {% endblock %}
+
+
