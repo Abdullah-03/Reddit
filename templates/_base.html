@@ -8,8 +8,9 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <script src="https://kit.fontawesome.com/6d13699433.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 {% block content %}
 
 {% endblock %}
