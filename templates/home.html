@@ -3,17 +3,16 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
-<h1>Home Page</h1>
+<h1 class="text-5xl font-bold text-center my-5">Home Page</h1>
 
     {% for post in posts %}
-        <div class="post">
-            <div class="post-body">
-                <i>Posted by {{ post.author.username }}</i>
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.body }}</p><br>
-            </div>
-        <div class="post-vote">
-                <button hx-post="{% url 'upvote' post.pk %}"
+        <div class="card w-screen bg-neutral shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p>{{ post.body|truncatewords:25 }}</p>
+
+            <div class="card-actions justify-start">
+              <button hx-post="{% url 'upvote' post.pk %}"
                 hx-trigger="click"
                 hx-target="#post-karma-{{ forloop.counter }}"
                 hx-swap="innerHTML">
@@ -27,11 +26,13 @@
                     <i class="fa-solid fa-arrow-down"></i>
                 </button>
 
-                <button>
-                    <a href="{{ post.get_absolute_url }}"><i class="fa-solid fa-comment"></i></a>
-                </button>
+                <a href="{{ post.get_absolute_url }}"><i class="fa-solid fa-comment"></i></a>
             </div>
+          </div>
         </div>
+
+        <br>
+
     {% endfor %}
 
 {% endblock %}
