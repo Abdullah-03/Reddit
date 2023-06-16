@@ -6,24 +6,30 @@
 <h1 class="text-5xl font-bold text-center my-5">Home Page</h1>
 
     {% for post in posts %}
-        <div class="card w-screen bg-neutral shadow-xl">
+        <div class="card w-[96%] m-auto bg-neutral shadow-xl">
           <div class="card-body">
-            <h2 class="card-title">{{ post.title }}</h2>
-            <p>{{ post.body|truncatewords:25 }}</p>
+            <div onclick="postDetail({{ post.pk }})">
+                <a href="{{ post.get_absolute_url }}">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p>{{ post.body|truncatewords:25 }}</p>
+                </a>
+            </div>
 
             <div class="card-actions justify-start">
-              <button hx-post="{% url 'upvote' post.pk %}"
-                hx-trigger="click"
-                hx-target="#post-karma-{{ forloop.counter }}"
-                hx-swap="innerHTML">
-                    <i class="fa-solid fa-arrow-up"></i>
+                <button onclick="upvote()" id="post-upvote-{{ forloop.counter }}"
+                    hx-post="{% url 'upvote' post.pk %}"
+                    hx-trigger="click"
+                    hx-target="#post-karma-{{ forloop.counter }}"
+                    hx-swap="innerHTML">
+                        <i class="fa-solid fa-arrow-up"></i>
                 </button>
-                <b id="post-karma-{{ forloop.counter }}">{{ post.karma }}</b>
-                <button hx-post="{% url 'downvote' post.pk %}"
-                hx-trigger="click"
-                hx-target="#post-karma-{{ forloop.counter }}"
-                hx-swap="innerHTML">
-                    <i class="fa-solid fa-arrow-down"></i>
+                    <b id="post-karma-{{ forloop.counter }}">{{ post.karma }}</b>
+                <button onclick="downvote({{ forloop.counter }})"
+                    hx-post="{% url 'downvote' post.pk %}"
+                    hx-trigger="click"
+                    hx-target="#post-karma-{{ forloop.counter }}"
+                    hx-swap="innerHTML">
+                        <i class="fa-solid fa-arrow-down"></i>
                 </button>
 
                 <a href="{{ post.get_absolute_url }}"><i class="fa-solid fa-comment"></i></a>
@@ -35,6 +41,10 @@
 
     {% endfor %}
 
+
+        <script>
+            function postDetail(pk) {
+                window.location.href = "http://127.0.0.1:8000/posts/"+String(pk)
+            }
+        </script>
 {% endblock %}
-
-

@@ -5,13 +5,14 @@ Post
 {% endblock %}
 
 {% block content %}
-    <div class="post-detail">
-<h1>{{ post.title }}</h1>
-<h3>By: {{ post.author }}</h3>
+    <br>
+    <div class="card w-[96%] bg-neutral shadow-xl m-auto">
+          <div class="card-body">
+            <h2 class="card-title mb-4">{{ post.title }}</h2>
+            <p>{{ post.body}}</p>
 
-<p>{{ post.body }}</p>
-<hr>
-    <button hx-post="{% url 'upvote' post.pk %}"
+            <div class="card-actions justify-start">
+              <button hx-post="{% url 'upvote' post.pk %}"
                 hx-trigger="click"
                 hx-target="#post-karma-{{ forloop.counter }}"
                 hx-swap="innerHTML">
@@ -24,13 +25,16 @@ Post
                 hx-swap="innerHTML">
                     <i class="fa-solid fa-arrow-down"></i>
                 </button>
-<hr>
+            </div>
 
-    <ul>
-    {% for comment in post.comments.all %}
-        <li>{{ comment.comment }} - <i>{{ comment.user.username }}</i></li>
-    {% endfor %}
-    </ul>
-
-</div>
+            <div class="pt-5">
+                <h3 class="text-xl my-2">Comments</h3>
+                <ul class="list-disc list-inside">
+                    {% for comment in post.comments.all %}
+                        <li>{{ comment.comment }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+          </div>
+        </div>
 {% endblock %}
